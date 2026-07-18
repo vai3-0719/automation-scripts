@@ -1,2 +1,3 @@
-# automation-scripts
-Daily automation scripts and tools
+# Automation Scripts
+
+Collection of daily automation scripts and tools.
