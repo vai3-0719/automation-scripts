@@ -1,0 +1,26 @@
+name: Daily Automation
+
+on:
+  schedule:
+    - cron: '30 8 * * *'
+  workflow_dispatch:
+
+jobs:
+  update:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/checkout@v4
+      - name: Run daily script
+        run: |
+          date -u >> logs/daily-run.log
+          echo "Status: OK" >> logs/daily-run.log
+          echo "---" >> logs/daily-run.log
+      - name: Update activity
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add .
+          git commit -m "chore: daily automation $(date -u '+%Y-%m-%d')" || true
+          git push
